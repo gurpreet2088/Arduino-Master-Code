@@ -1,0 +1,983 @@
+
+____________________________________________________________________________________
+
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(4, 6, 10, 11, 12, 13);
+ 
+void setup() {
+  lcd.begin(16, 2);
+  
+}
+
+void loop() 
+{
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(1, 0);
+  lcd.print("Gurpreet Singh");
+  delay(1000);
+  lcd.setCursor(5, 1);
+  lcd.print("Tahli");
+  delay(1000); 
+  lcd.clear();
+  delay(1000);
+  lcd.setCursor(1,0);
+  lcd.print("Gurpreet Singh");
+  delay(1000);
+  lcd.setCursor(1, 1);
+  lcd.print("Assist. Prof.");
+  delay(1000); 
+  lcd.clear();
+  delay(1000);
+  lcd.setCursor(1,0);
+  lcd.print("Gurpreet Singh");
+  delay(1000);
+  lcd.setCursor(0, 1);
+  lcd.print("CAD CAM ROBOTICS");
+  delay(3000); 
+  lcd.clear();
+}
+
+______________________________________________________________________________
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(4, 6, 10, 11, 12, 13);
+void setup()
+{
+  lcd.begin(16, 1); 
+}
+void loop() 
+{
+    lcd.clear(); 
+    lcd.setCursor(3,1);
+    lcd.print("GURPREET FDI");
+    delay(1000);
+    lcd.clear();
+    delay(1000);
+}
+______________________________________________________________________________
+#define LS 2 // left sensor
+#define RS 3 // right sensor
+
+
+#define LS1 4 // new left sensor
+#define RS1 5 // new right sensor
+
+
+#define LMR1 9 // left motor M1a
+#define LMR2 8 // left motor M2a
+#define RMR1 11 // right motor M2a
+#define RMR2 10 // right motor M2b
+
+
+#define C3 12
+#define C4 13
+
+
+#define trigPin 50 // input to US Sensor
+#define echoPin 48 // output by US Sensor
+
+void setup()
+{
+pinMode(LS, INPUT);
+pinMode(RS, INPUT);
+
+pinMode(LS1, INPUT);
+pinMode(RS1, INPUT);
+
+pinMode(LMR1, OUTPUT);
+pinMode(LMR2, OUTPUT);
+pinMode(RMR1, OUTPUT);
+pinMode(RMR2, OUTPUT);
+
+pinMode(C3, OUTPUT);
+pinMode(C4, OUTPUT);
+
+
+pinMode(trigPin,OUTPUT);
+pinMode(echoPin,INPUT);
+
+Serial.begin(9600);
+
+}
+void loop()
+{
+
+analogWrite(C3,250);
+analogWrite(C4,250);
+
+long duration, distance;
+  digitalWrite(trigPin, LOW);  
+  delayMicroseconds(2); 
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+  if (distance < 10)
+  {  //you are free to change this
+
+    digitalWrite(LMR1, LOW);
+    digitalWrite(LMR2, LOW);
+    digitalWrite(RMR1, LOW);
+    digitalWrite(RMR2, LOW);
+
+    Serial.println("Robot Stopeed due to Obstacle within 10cm");
+  }
+  else
+  {
+if(digitalRead(LS1) && digitalRead(LS) && digitalRead(RS) && digitalRead(RS1)) // STOP
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+
+Serial.println("Robot Stopped");
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // Forward
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+
+Serial.println("Robot Moving FORWARD DUE TO SIGNAL FROM ALL SENSORES");
+
+}
+if((digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS1");
+
+Serial.println(digitalRead(LS));
+
+}
+
+if((digitalRead(LS1)) && (digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS1 AND LS");
+
+Serial.println(digitalRead(LS));
+
+}
+if(!(digitalRead(LS1)) && (digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS");
+
+Serial.println(digitalRead(LS));
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && (digitalRead(RS)) && !(digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS");
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && (digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS1");
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && (digitalRead(RS)) && (digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS AND RS1");
+
+}
+}
+
+}
+
+________________________________________________________________________________
+// connect motor controller pins to Arduino digital pins
+// motor one
+int enA = 10;
+int in1 = 9;
+int in2 = 8;
+// motor two
+int enB = 5;
+int in3 = 7;
+int in4 = 6;
+void setup()
+{
+  // set all the motor control pins to outputs
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+}
+
+void loop()
+{
+  analogWrite(enA, 60);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  
+  analogWrite(enB, 60);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  
+}
+
+______________________________________________________________________________________
+//set pin numbers
+ 
+const int ledPin = 13;
+const int buzzerPin = 12;
+const int ldrPin = A0;
+ 
+void setup () {
+ 
+  Serial.begin(9600);
+ 
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ldrPin, INPUT);
+}
+ 
+void loop() {
+ 
+  int ldrStatus = analogRead(ldrPin);  //read the state of the LDR value
+ 
+  if (ldrStatus >= 400) {
+ 
+    tone(buzzerPin, 100);
+    digitalWrite(ledPin, HIGH);
+    delay(100);
+ 
+    noTone(buzzerPin);
+    digitalWrite(ledPin, LOW);
+    delay(500);
+ 
+    Serial.println("----------- ALARM ACTIVATED -----------"); 
+  }
+  else {
+ 
+    noTone(buzzerPin);
+    digitalWrite(ledPin, LOW);
+ 
+    Serial.println("ALARM DEACTIVATED");
+  }
+}
+
+__________________________________________________________________________________
+//set pin numbers
+ 
+const int ledPin = 13;
+const int buzzerPin = 12;
+const int ldrPin = A0;
+ 
+void setup () {
+ 
+  Serial.begin(9600);
+ 
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ldrPin, INPUT);
+}
+ 
+void loop() {
+ 
+  int ldrStatus = analogRead(ldrPin);  //read the state of the LDR value
+ 
+  if (ldrStatus >= 400) {
+ 
+    tone(buzzerPin, 100);
+    digitalWrite(ledPin, HIGH);
+    delay(100);
+ 
+    noTone(buzzerPin);
+    digitalWrite(ledPin, LOW);
+    delay(500);
+ 
+    Serial.println("----------- ALARM ACTIVATED -----------"); 
+  }
+  else {
+ 
+    noTone(buzzerPin);
+    digitalWrite(ledPin, LOW);
+ 
+    Serial.println("ALARM DEACTIVATED");
+  }
+}
+
+_______________________________________________________________________
+/* **********************************************************
+ *                                                          *
+ *  Mert Arduino and Tech - YouTube                         *
+ *  Remote Controlled Robot Car (TV - Infrared Remote (IR)) *
+ *  Please Subscribe for Support - https://goo.gl/RLT6DT    *
+ *                                                          *
+ ************************************************************/
+
+/* include library */
+#include <IRremote.h>
+
+/*
+ * If you have no idea about "IRremote" library, you can watch the tutorial below
+ * Arduino Tutorial 32: Control your LEDs with TV or IR Remote
+ * https://youtu.be/IVToijhx0ck
+ */
+
+/* define IR sensor pin */
+int IRsensorPin = 2;
+
+/* define the some functions used by the library */
+IRrecv irrecv(IRsensorPin);
+decode_results results;
+
+/* define L298N motor drive control pins */
+#define LM1 8 
+#define LM2 9 
+#define RM1 10 
+#define RM2 11 
+
+
+void setup(){
+  
+  /* initialize motor control pins as output */
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+
+  /* start serial communication to see hex codes */
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+}
+
+void loop(){
+       
+  /* if the sensor is receive any signal */
+  if (irrecv.decode(&results)){
+    
+    /* print the hex code value on the serial monitor */
+    Serial.println(results.value);
+    delay(5);
+
+    /* resume function according to hex code */
+    irrecv.resume();
+  }
+  
+  /* if the incoming data is "defined hex code" then run the motors functions */
+  /* instead of zeros "0000", write the hex codes of your remote control */
+  if(results.value == 1674690463) MotorForward();
+  if(results.value == 3179222947) MotorBackward();
+  if(results.value == 2340092731) TurnRight1();
+  if(results.value == 2086679999) TurnLeft1();
+  if(results.value == 3733801123) MotorStop();
+  
+}
+
+/* FORWARD */
+void MotorForward(){
+      digitalWrite(LM1, HIGH);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+}
+
+/* BACKWARD */
+void MotorBackward(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH); 
+}
+
+/* TURN RIGHT */
+
+void TurnRight1(){
+      digitalWrite(LM1, HIGH);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, LOW); 
+}
+void TurnRight2(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH); 
+}
+void TurnFullRight(){
+      digitalWrite(LM1, HIGH);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH); 
+}
+
+/* TURN LEFT */
+void TurnLeft1(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+      
+}
+void TurnLeft2(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, LOW); 
+      
+}
+
+void TurnFullLeft(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+}
+
+/* STOP */
+void MotorStop(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, LOW); 
+}
+
+_______________________________________________________________________________________
+/*
+ * https://github.com/chauhannaman98
+ *
+ * sketch.ino
+ *
+ * July 25, 2018 © GPL3+
+ * Author : Naman Chauhan
+ */
+
+#include <IRremote.h>      //including infrared remote header file
+
+int RECV_PIN = 2;        // the pin where you connect the output pin of IR sensor 
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+ 
+void setup()
+{
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+}
+ 
+void loop() 
+{
+  if (irrecv.decode(&results)) 
+    {
+    int value = results.value;
+    Serial.println(" ");
+    Serial.print("Code: ");
+    Serial.println(results.value); //prints the value a a button press
+    Serial.println(" ");
+    irrecv.resume();              // Receive the next value
+    Serial.println("*****************");
+    }
+}
+
+_________________________________________________________________________
+#include <IRremote.h>
+
+int IRpin = 2;
+IRrecv irrecv(IRpin);
+decode_results results;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  irrecv.enableIRIn(); // Start the receiver
+}  
+void loop() 
+
+{   
+  if (irrecv.decode(&results)) 
+    {
+     Serial.println(results.value); // Print the Serial 'results.value'
+      delay(10);
+
+     irrecv.resume();   // Receive the next value
+    }
+}    
+
+___________________________________________________________________________________
+#include <IRremote.h>
+
+int RECV_PIN = 2;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+
+#define LM1 8 
+#define LM2 9 
+#define RM1 10 
+#define RM2 11 
+
+#define RLED 5
+#define BLED 6
+#define GLED 7
+
+void setup()
+{
+  pinMode(RLED, OUTPUT);
+  pinMode(BLED, OUTPUT);
+  pinMode(GLED, OUTPUT);
+
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+}
+void loop() 
+{
+
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH);
+
+  if (irrecv.decode(&results))
+  {
+   
+    Serial.print(results.value);
+    Serial.print("  ");
+    if (results.value == 0x2ADE08A3)
+    {  
+      digitalWrite(RLED, HIGH);
+      delay(5000);
+      digitalWrite(RLED, LOW);
+     
+    }
+    if (results.value == 2137078331)
+    {  
+      digitalWrite(BLED, HIGH);
+      delay(5000);
+      digitalWrite(BLED, LOW);
+     
+    }
+    if (results.value == 440841023)
+    {  
+      digitalWrite(GLED, HIGH);
+      delay(5000);
+      digitalWrite(GLED, LOW);
+     
+    }
+    if (results.value == 2671644771)
+    {  
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      digitalWrite(RLED, LOW);
+      digitalWrite(BLED, HIGH);
+      delay(400);
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, HIGH);
+      delay(400);
+      digitalWrite(GLED, LOW);
+    }
+    if (results.value == 800219743)
+    {  
+      digitalWrite(GLED, HIGH);
+      delay(400);
+      digitalWrite(GLED, LOW);
+      digitalWrite(BLED, HIGH);
+      delay(400);
+      digitalWrite(BLED, LOW);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      digitalWrite(RLED, LOW);
+    }
+    if (results.value == 1290492415)
+    {  
+      digitalWrite(GLED, HIGH);
+      digitalWrite(BLED, HIGH);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, LOW);
+      digitalWrite(RLED, LOW);
+      delay(300);
+      digitalWrite(GLED, HIGH);
+      digitalWrite(BLED, HIGH);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, LOW);
+      digitalWrite(RLED, LOW);
+      
+    }
+    
+    irrecv.resume();
+  }
+}
+
+___________________________________________________________________________
+#define LS 2 // left sensor
+#define RS 3 // right sensor
+
+
+#define LS1 4 // new left sensor
+#define RS1 5 // new right sensor
+
+
+#define LMR1 9 // left motor M1a
+#define LMR2 8 // left motor M2a
+#define RMR1 11 // right motor M2a
+#define RMR2 10 // right motor M2b
+
+#define buzzer 52// buzzer beep pin
+
+#define RLED 42// Red LEd Glow
+#define GLED 44// Green LED Glow
+#define BLED 46// Blue LED Glow
+
+
+
+
+#define C3 12
+#define C4 13
+
+
+#define trigPin 50 // input to US Sensor
+#define echoPin 48 // output by US Sensor
+
+void setup()
+{
+pinMode(LS, INPUT);
+pinMode(RS, INPUT);
+
+pinMode(LS1, INPUT);
+pinMode(RS1, INPUT);
+
+pinMode(LMR1, OUTPUT);
+pinMode(LMR2, OUTPUT);
+pinMode(RMR1, OUTPUT);
+pinMode(RMR2, OUTPUT);
+
+pinMode(C3, OUTPUT);
+pinMode(C4, OUTPUT);
+
+pinMode(buzzer, OUTPUT);
+
+pinMode(RLED, OUTPUT);
+pinMode(GLED, OUTPUT);
+pinMode(BLED, OUTPUT);
+
+pinMode(trigPin,OUTPUT);
+pinMode(echoPin,INPUT);
+
+Serial.begin(9600);
+
+}
+void loop()
+{
+
+analogWrite(C3,250);
+analogWrite(C4,250);
+
+long duration, distance;
+  digitalWrite(trigPin, LOW);  
+  delayMicroseconds(2); 
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+  if (distance < 20)
+  {  //you are free to change this
+
+    digitalWrite(LMR1, LOW);
+    digitalWrite(LMR2, LOW);
+    digitalWrite(RMR1, LOW);
+    digitalWrite(RMR2, LOW);
+
+    digitalWrite(buzzer, HIGH);
+
+    digitalWrite(RLED, HIGH);
+    
+
+    Serial.println("Robot Stopeed due to Obstacle within 10cm");
+  }
+  else
+  {
+    digitalWrite(buzzer, LOW);
+    digitalWrite(RLED, LOW);
+    digitalWrite(GLED, HIGH);
+    digitalWrite(BLED, LOW);
+if(digitalRead(LS1) && digitalRead(LS) && digitalRead(RS) && digitalRead(RS1)) // STOP
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+
+digitalWrite(RLED, HIGH);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, LOW);
+
+Serial.println("Robot Stopped");
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // Forward
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, HIGH);
+    digitalWrite(BLED, LOW);
+
+Serial.println("Robot Moving FORWARD DUE TO SIGNAL FROM ALL SENSORES");
+
+}
+if((digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS1");
+
+Serial.println(digitalRead(LS));
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+
+}
+
+if((digitalRead(LS1)) && (digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS1 AND LS");
+
+Serial.println(digitalRead(LS));
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+
+}
+if(!(digitalRead(LS1)) && (digitalRead(LS)) && !(digitalRead(RS)) && !(digitalRead(RS1))) // LEFT TURN
+{
+digitalWrite(LMR1, LOW);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, HIGH);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving LEFT DUE TO ABSENCE OF SIGNAL FROM LS");
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+
+Serial.println(digitalRead(LS));
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && (digitalRead(RS)) && !(digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS");
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && !(digitalRead(RS)) && (digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS1");
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+
+}
+
+if(!(digitalRead(LS1)) && !(digitalRead(LS)) && (digitalRead(RS)) && (digitalRead(RS1))) // RIGHT TURN
+{
+digitalWrite(LMR1, HIGH);
+digitalWrite(LMR2, LOW);
+digitalWrite(RMR1, LOW);
+digitalWrite(RMR2, LOW);
+Serial.println("Robot Moving RIGHT DUE TO ABSENCE OF SIGNAL FROM RS AND RS1");
+
+digitalWrite(RLED, LOW);
+    digitalWrite(GLED, LOW);
+    digitalWrite(BLED, HIGH);
+}
+}
+
+}
+
+______________________________________________________________________________
+#define LS 2 // left sensor
+#define RS 3 // right sensor
+#define LM1 5 // left motor M1a
+#define LM2 4 // left motor M2a
+#define RM1 7 // right motor M2a
+#define RM2 6 // right motor M2b
+void setup()
+{
+pinMode(LS, INPUT);
+pinMode(RS, INPUT);
+pinMode(LM1, OUTPUT);
+pinMode(LM2, OUTPUT);
+pinMode(RM1, OUTPUT);
+pinMode(RM2, OUTPUT);
+}
+void loop()
+{
+if(digitalRead(LS) && digitalRead(RS)) // Move Forward on line
+{
+digitalWrite(LM1, LOW);
+digitalWrite(LM2, LOW);
+digitalWrite(RM1, LOW);
+digitalWrite(RM2, LOW);
+}
+if(digitalRead(LS) && !(digitalRead(RS))) // turn left by rotationg left motors in forward and right ones in backward direction
+{
+digitalWrite(LM1, HIGH);
+digitalWrite(LM2, LOW);
+digitalWrite(RM1, LOW);
+digitalWrite(RM2, HIGH);
+}
+if(!(digitalRead(LS)) && digitalRead(RS)) // Turn right by rotating right motors in forward and left ones in backward direction
+{
+digitalWrite(LM1, LOW);
+digitalWrite(LM2, HIGH);
+digitalWrite(RM1, HIGH);
+digitalWrite(RM2, LOW);
+}
+
+if(!(digitalRead(LS)) && !(digitalRead(RS))) // Finish line, stop both the motors
+{
+digitalWrite(LM1, HIGH);
+digitalWrite(LM2, LOW);
+digitalWrite(RM1, HIGH);
+digitalWrite(RM2, LOW);
+}
+}
+
+_____________________________________________________________________
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(4, 6, 10, 11, 12, 13);
+char line1[]="   Hi Everyone!  ";
+char line2[]=" Me: Designed by";
+char line3[]="  Your Order is placed.  ";
+void setup() 
+{
+   lcd.begin(16, 2);
+  
+}
+
+void loop() 
+{
+  lcd.clear();
+  lcd.setCursor(16, 0);
+    for (int pc = 0; pc < 16; pc++)
+    {
+      lcd.print (line1[pc]);
+      lcd.scrollDisplayLeft ();
+      delay(350);
+    } 
+    delay(2500);
+    lcd.clear();
+    lcd.setCursor(2,1);
+    lcd.print("How are you? ");
+    delay(3000); 
+    lcd.clear();
+    lcd.setCursor(1,0);
+    lcd.print("Hope u r fine.");
+    delay(4000);  
+    lcd.clear();
+    lcd.setCursor(0,0);
+    for (int pc2 =0; pc2 < 16; pc2++)
+    {
+      lcd.print(line2[pc2]);
+      delay(200);
+    }
+    delay(2000);
+    lcd.setCursor(4,1);
+    lcd.print("Mr. SINGH");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Mr. SINGH");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(7,1);
+    lcd.print("Mr. SINGH");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(5,0);
+    lcd.print("Congrats!");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(16,1);
+    for (int pc3 =0; pc3 < 25; pc3++)
+    {
+      lcd.scrollDisplayLeft();
+      lcd.print(line3[pc3]);
+      delay(350);
+    }
+    
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(2,0);
+    lcd.print("TX ID is 153612");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(6,0);
+    lcd.print("by by");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(2,1);
+    lcd.print("See You Again");
+    delay(4000);
+
+}
+__________________________________________________________________
