@@ -1,0 +1,8 @@
+KEY1
+
+D9 24 DE D5
+
+CARD
+
+F9 C6 65 C1
+
