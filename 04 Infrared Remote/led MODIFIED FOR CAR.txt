@@ -1,0 +1,112 @@
+#include <IRremote.h>
+
+int RECV_PIN = 2;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+
+#define LM1 8 
+#define LM2 9 
+#define RM1 10 
+#define RM2 11 
+
+#define RLED 5
+#define BLED 6
+#define GLED 7
+
+void setup()
+{
+  pinMode(RLED, OUTPUT);
+  pinMode(BLED, OUTPUT);
+  pinMode(GLED, OUTPUT);
+
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+}
+void loop() 
+{
+
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH);
+
+  if (irrecv.decode(&results))
+  {
+   
+    Serial.print(results.value);
+    Serial.print("  ");
+    if (results.value == 0x2ADE08A3)
+    {  
+      digitalWrite(RLED, HIGH);
+      delay(5000);
+      digitalWrite(RLED, LOW);
+     
+    }
+    if (results.value == 2137078331)
+    {  
+      digitalWrite(BLED, HIGH);
+      delay(5000);
+      digitalWrite(BLED, LOW);
+     
+    }
+    if (results.value == 440841023)
+    {  
+      digitalWrite(GLED, HIGH);
+      delay(5000);
+      digitalWrite(GLED, LOW);
+     
+    }
+    if (results.value == 2671644771)
+    {  
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      digitalWrite(RLED, LOW);
+      digitalWrite(BLED, HIGH);
+      delay(400);
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, HIGH);
+      delay(400);
+      digitalWrite(GLED, LOW);
+    }
+    if (results.value == 800219743)
+    {  
+      digitalWrite(GLED, HIGH);
+      delay(400);
+      digitalWrite(GLED, LOW);
+      digitalWrite(BLED, HIGH);
+      delay(400);
+      digitalWrite(BLED, LOW);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      digitalWrite(RLED, LOW);
+    }
+    if (results.value == 1290492415)
+    {  
+      digitalWrite(GLED, HIGH);
+      digitalWrite(BLED, HIGH);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, LOW);
+      digitalWrite(RLED, LOW);
+      delay(300);
+      digitalWrite(GLED, HIGH);
+      digitalWrite(BLED, HIGH);
+      digitalWrite(RLED, HIGH);
+      delay(400);
+      
+      digitalWrite(BLED, LOW);
+      digitalWrite(GLED, LOW);
+      digitalWrite(RLED, LOW);
+      
+    }
+    
+    irrecv.resume();
+  }
+}

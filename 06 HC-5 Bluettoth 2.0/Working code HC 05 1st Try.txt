@@ -1,0 +1,101 @@
+#include<SoftwareSerial.h>
+
+#define TxD 3
+#define RxD 2
+
+#define IN1 8
+#define IN2 9
+#define IN3 10
+#define IN4 11
+
+SoftwareSerial bluetoothSerial(TxD, RxD);
+
+char c;
+
+void setup() {
+  bluetoothSerial.begin(9600);
+  Serial.begin(9600);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+
+  }
+
+void loop() {
+
+  if(bluetoothSerial.available()){
+    c = bluetoothSerial.read();
+    Serial.println(c);
+    if(c=='1'){
+      forward();
+      Serial.println("Moving Forward");
+      Serial.print(c);
+             
+    }
+    if(c=='2'){
+      reverse();
+      Serial.println("Taking Reverse");
+      Serial.print(c);
+       
+    }
+    if(c=='3'){
+       left();
+      Serial.println("Turning Left");
+      Serial.print(c);
+       
+    }
+    if(c=='4'){
+      right();
+      Serial.println("Turning Right");
+      Serial.print(c);
+       
+    }
+    if(c=='5'){
+      stoprobot();
+      Serial.println("Stopping !!!!");
+      Serial.print(c);
+       
+    }
+  }
+}
+
+void forward()
+{
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN4, HIGH);
+  digitalWrite(IN3, LOW); 
+}
+
+void reverse()
+{
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN4, LOW);
+  digitalWrite(IN3, HIGH); 
+}
+
+void left()
+{
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN4, LOW);
+  digitalWrite(IN3, LOW); 
+}
+
+void right()
+{
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN4, HIGH);
+  digitalWrite(IN3, LOW);
+}
+
+void stoprobot()
+{
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}

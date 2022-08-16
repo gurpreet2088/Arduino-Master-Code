@@ -1,0 +1,93 @@
+#include<VarSpeedServo.h>
+
+VarSpeedServo servo1; //Servos
+VarSpeedServo servo2;
+VarSpeedServo servo3;
+VarSpeedServo servo4;
+VarSpeedServo servo5;
+VarSpeedServo servo6;
+
+const int pot1 = A0; //Potentimeters
+const int pot2 = A1; 
+const int pot3 = A2;
+const int pot4 = A3;
+const int pot5 = A4;
+const int pot6 = A5;
+
+int pot1Val; //Potentimeter values
+int pot2Val;
+int pot3Val;
+int pot4Val;
+int pot5Val;
+int pot6Val;
+
+int pot1Angle;
+int pot2Angle;
+int pot3Angle;
+int pot4Angle;
+int pot5Angle;
+int pot6Angle;
+
+void setup() {
+  servo1.attach(10); // Set up everything and will run once; attach servos and define the pin modes
+  servo2.attach(11);
+  servo3.attach(12);
+  servo4.attach(13);
+  servo5.attach(9);
+  servo6.attach(6);
+
+  Serial.begin(9600);
+//  servo1.write(90,3); // These will make the servos move to the mapped angles
+//  servo1.wait();
+//  servo2.write(90,2);
+//  servo2.wait();
+//  servo3.write(100,2);
+//  servo3.wait();
+//  servo4.write(100,2);
+//  servo4.wait();
+//  servo5.write(100,2);
+//  servo5.wait();
+//  servo6.write(170,10);
+//  servo6.wait();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly: 
+  pot1Val = analogRead(pot1); // This will read the values from the potentimeters and store it...
+  pot1Angle = map(pot1Val, 0, 1023, 10, 147); // ... and this will map the values from the potentiometers to values the servos can use and store it for later use
+  pot2Val = analogRead(pot2); 
+  pot2Angle = map(pot2Val, 0, 1023, 30, 130);
+  pot3Val = analogRead(pot3);
+  pot3Angle = map(pot3Val, 0, 1023, 20, 165);
+  pot4Val = analogRead(pot4);
+  pot4Angle = map(pot4Val, 0, 1023, 40, 150);
+  pot5Val = analogRead(pot5);
+  pot5Angle = map(pot5Val, 0, 1023, 89, 179);
+  pot6Val = analogRead(pot6);
+  pot6Angle = map(pot6Val, 0, 1023, 130, 179);
+  
+
+          servo1.write(pot1Angle,3); // These will make the servos move to the mapped angles
+          servo1.wait();
+          servo2.write(pot2Angle,2);
+          servo2.wait();
+          servo3.write(pot3Angle,2);
+          servo3.wait();
+          servo4.write(pot4Angle,2);
+          servo4.wait();
+          servo5.write(pot5Angle,5);
+          servo5.wait();
+          servo6.write(pot6Angle,7);
+          servo6.wait();
+          
+         
+  Serial.println("potAngle values");
+  Serial.println(pot1Angle);
+  Serial.println(pot2Angle);
+  Serial.println(pot3Angle);
+  Serial.println(pot4Angle);
+  Serial.println(pot5Angle);
+  Serial.println(pot6Angle);
+      
+  delay(300);
+} 

@@ -1,0 +1,108 @@
+13:46:29.789 -> +VERSION=Firmware V4.4.0,Bluetooth V4.0 LE
+
+13:49:40.269 -> OK
+13:49:49.402 -> +NAME=BT05
+13:51:40.209 -> +NAME=BT05
+13:52:00.309 -> +NAME== TAHLI
+13:52:00.343 -> OK
+13:52:15.342 -> +NAME== TAHLI
+13:52:36.608 -> +PIN=123456
+13:52:51.883 -> ERROR=104
+13:53:01.002 -> +PIN=123456
+13:53:17.083 -> ERROR=102
+13:53:28.685 -> ERROR=102
+13:53:41.365 -> +NAME== TAHLI
+13:53:51.385 -> +NAME== GPS
+13:53:51.385 -> OK
+13:53:56.128 -> +NAME== GPS
+13:54:12.781 -> +NAME== GURPREET
+13:54:12.815 -> OK
+13:54:23.385 -> +PIN=123456
+13:55:33.126 -> +PIN=123456
+13:56:39.106 -> OK
+13:56:44.552 -> OK
+13:56:51.215 -> OK
+13:56:57.552 -> +NAME== GURPREET
+13:58:05.567 -> +PIN=123456
+13:58:14.331 -> ERROR=102
+13:58:26.861 -> ERROR=102
+13:58:50.321 -> ERROR=102
+14:00:04.420 -> OK
+14:00:17.258 -> ERROR=102
+14:00:53.560 -> +PIN=123456
+14:01:19.889 -> ERROR=102
+14:01:49.367 -> ERROR=102
+14:02:25.294 -> +TYPE=0
+14:02:53.798 -> ERROR=103
+14:03:32.048 -> ERROR=103
+14:03:38.863 -> +TYPE=0
+
+14:07:08.279 -> ********************************************************************
+14:07:08.379 -> * Command             Description			           *
+14:07:08.479 -> * ---------------------------------------------------------------- *
+14:07:08.579 -> * AT                  Check if the command terminal work normally  *
+14:07:08.679 -> * AT+RESET            Software reboot				   *
+14:07:08.781 -> * AT+VERSION          Get firmware, bluetooth, HCI and LMP version *
+14:07:08.881 -> * AT+HELP             List all the commands		           *
+14:07:08.981 -> * AT+NAME             Get/Set local device name                    *
+14:07:09.049 -> * AT+PIN              Get/Set pin code for pairing                 *
+14:07:09.182 -> * AT+PASS             Get/Set pin code for pairing                 *
+14:07:09.250 -> * AT+BAUD             Get/Set baud rate		                   *
+14:07:09.383 -> * AT+LADDR            Get local bluetooth address		   *
+14:07:09.485 -> * AT+ADDR             Get local bluetooth address		   *
+14:07:09.552 -> * AT+DEFAULT          Restore factory default			   *
+14:07:09.686 -> * AT+RENEW            Restore factory default			   *
+14:07:09.754 -> * AT+STATE            Get current state				   *
+14:07:09.854 -> * AT+PWRM             Get/Set power on mode(low power) 		   *
+14:07:09.954 -> * AT+POWE             Get/Set RF transmit power 		   *
+14:07:10.054 -> * AT+SLEEP            Sleep mode 		                   *
+14:07:10.155 -> * AT+ROLE             Get/Set current role.	                   *
+14:07:10.256 -> * AT+PARI             Get/Set UART parity bit.                     *
+14:07:10.358 -> * AT+STOP             Get/Set UART stop bit.                       *
+14:07:10.458 -> * AT+START            System start working.			   *
+14:07:10.560 -> * AT+IMME             System wait for command when power on.	   *
+14:07:10.661 -> * AT+IBEA             Switch iBeacon mode.	                   *
+14:07:10.762 -> * AT+IBE0             Set iBeacon UUID 0.            	           *
+14:07:10.862 -> * AT+IBE1             Set iBeacon UUID 1.            	           *
+14:07:10.964 -> * AT+IBE2             Set iBeacon UUID 2.            	           *
+14:07:11.064 -> * AT+IBE3             Set iBeacon UUID 3.            	           *
+14:07:11.164 -> * AT+MARJ             Set iBeacon MARJ .            	           *
+14:07:11.264 -> * AT+MINO             Set iBeacon MINO .            	           *
+14:07:11.366 -> * AT+MEA              Set iBeacon MEA .            	           *
+14:07:11.466 -> * AT+NOTI             Notify connection event .                    *
+14:07:11.567 -> * AT+UUID             Get/Set system SERVER_UUID .            	   *
+14:07:11.667 -> * AT+CHAR             Get/Set system CHAR_UUID .            	   *
+14:07:11.768 -> * -----------------------------------------------------------------*
+14:07:11.869 -> * Note: (M) = The command support slave mode only. 		   *
+14:07:11.936 -> ********************************************************************
+
+
+14:08:03.060 -> +PASS=123456
+14:08:18.201 -> ERROR=102
+14:08:26.452 -> ERROR=102
+14:08:40.225 -> ERROR=102
+14:08:56.777 -> ERROR=102
+14:09:02.817 -> +PASS=123456
+14:09:51.662 -> OK
+14:09:59.548 -> +PIN=123456
+14:10:21.357 -> ERROR=102
+14:10:34.754 -> ERROR=102
+14:13:46.380 -> OK
+14:13:56.245 -> +PIN=654321
+14:13:56.279 -> OK
+14:14:02.977 -> +PIN=654321
+14:14:29.754 -> +PASS=654321
+14:47:00.923 -> +NAME== GURPREET
+14:47:33.689 -> +NAME== ROBO CAR
+14:47:33.689 -> OK
+14:48:19.113 -> +PIN=654321
+14:48:50.560 -> +PIN=666111
+14:48:50.560 -> OK
+14:49:21.415 -> +PIN=666111
+14:55:49.286 -> +TYPE=0
+14:56:01.124 -> +TYPE=1
+14:56:01.124 -> OK
+14:56:07.061 -> +TYPE=1
+14:56:15.194 -> +TYPE=2
+14:56:15.228 -> OK
+14:59:54.857 -> +TYPE=2

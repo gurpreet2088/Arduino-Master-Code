@@ -1,0 +1,22 @@
+// Program for running DC motor
+
+#include <AFMotor.h>
+
+AF_DCMotor motor1(1);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Motor party!");
+
+  motor1.setSpeed(200);
+  motor1.run(RELEASE);
+}
+
+void loop() 
+
+{
+  motor1.run(FORWARD); delay(3000);
+  motor1.run(RELEASE); delay(2000);
+  motor1.run(BACKWARD); delay(3000);
+  
+}

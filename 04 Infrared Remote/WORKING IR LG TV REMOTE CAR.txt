@@ -1,0 +1,123 @@
+/* **********************************************************
+ *                                                          *
+ *  Mert Arduino and Tech - YouTube                         *
+ *  Remote Controlled Robot Car (TV - Infrared Remote (IR)) *
+ *  Please Subscribe for Support - https://goo.gl/RLT6DT    *
+ *                                                          *
+ ************************************************************/
+
+/* include library */
+#include <IRremote.h>
+
+/*
+ * If you have no idea about "IRremote" library, you can watch the tutorial below
+ * Arduino Tutorial 32: Control your LEDs with TV or IR Remote
+ * https://youtu.be/IVToijhx0ck
+ */
+
+/* define IR sensor pin */
+int IRsensorPin = 2;
+
+/* define the some functions used by the library */
+IRrecv irrecv(IRsensorPin);
+decode_results results;
+
+/* define L298N motor drive control pins */
+#define LM1 8 
+#define LM2 9 
+#define RM1 10 
+#define RM2 11 
+
+
+void setup(){
+  
+  /* initialize motor control pins as output */
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+
+  /* start serial communication to see hex codes */
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+}
+
+void loop(){
+       
+  /* if the sensor is receive any signal */
+  if (irrecv.decode(&results)){
+    
+    /* print the hex code value on the serial monitor */
+    Serial.println(results.value);
+    delay(5);
+
+    /* resume function according to hex code */
+    irrecv.resume();
+  }
+  
+  /* if the incoming data is "defined hex code" then run the motors functions */
+  /* instead of zeros "0000", write the hex codes of your remote control */
+  if(results.value == 1674690463) MotorForward();
+  if(results.value == 3179222947) MotorBackward();
+  if(results.value == 2340092731) TurnRight();
+  if(results.value == 2086679999) TurnLeft1();
+  if(results.value == 3733801123) MotorStop();
+  
+}
+
+/* FORWARD */
+void MotorForward(){
+      digitalWrite(LM1, HIGH);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+}
+
+/* BACKWARD */
+void MotorBackward(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH); 
+}
+
+/* TURN RIGHT */
+
+
+void TurnFullRight(){
+      digitalWrite(LM1, HIGH);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, HIGH); 
+}
+
+/* TURN LEFT */
+void TurnLeft1(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+      
+}
+void TurnLeft2(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, LOW); 
+      
+}
+
+void TurnFullLeft(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, HIGH);
+      digitalWrite(RM2, HIGH);
+      digitalWrite(RM1, LOW); 
+}
+
+/* STOP */
+void MotorStop(){
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM2, LOW);
+      digitalWrite(RM1, LOW); 
+}

@@ -1,0 +1,27 @@
+// Program for running DC motor and Servo Motor
+
+#include <AFMotor.h>
+#include <Servo.h>
+
+AF_DCMotor motor1(1); // Attached DC motor to port 1
+Servo servo1; // Naming Servo motor
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Motor party!");
+  
+  servo1.attach(9); // Servo motor Pin defined
+  motor1.setSpeed(200);
+  motor1.run(RELEASE);
+}
+
+void loop()
+
+{
+  motor1.run(FORWARD); delay(3000);
+  servo1.write(20); delay(1000);
+  motor1.run(RELEASE); delay(2000);
+  servo1.write(100); delay(1000);
+  motor1.run(BACKWARD); delay(3000);
+
+}
